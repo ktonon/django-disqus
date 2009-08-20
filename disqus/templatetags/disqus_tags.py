@@ -19,11 +19,14 @@ def disqus_dev():
         """ % Site.objects.get_current().domain
     return ""
 
-def disqus_num_replies():
+def disqus_num_replies(shortname=''):
     """
     Returns the HTML/js code necessary to display the number of comments
     for a DISQUS thread.
     """
+    
+    disqus_shortname = getattr(settings,'DISQUS_WEBSITE_SHORTNAME', shortname)
+    
     return """
     <script type="text/javascript">
     //<![CDATA[
@@ -39,12 +42,15 @@ def disqus_num_replies():
     })();
     //]]>
     </script>
-    """ % settings.DISQUS_WEBSITE_SHORTNAME
+    """ % disqus_shortname
 
-def disqus_show_comments(title=None, url=None, snippet=None):
+def disqus_show_comments(title=None, url=None, snippet=None, shortname=''):
     """
     Returns the HTML code necessary to display DISQUS comments.
     """
+    
+    disqus_shortname = getattr(settings,'DISQUS_WEBSITE_SHORTNAME', shortname)
+    
     if title or url or snippet:
         s = '<script type="text/javascript">'
         if title:   s += 'var disqus_title = "%s";' % escapejs(title)
@@ -58,7 +64,7 @@ def disqus_show_comments(title=None, url=None, snippet=None):
     <script type="text/javascript" src="http://disqus.com/forums/%(shortname)s/embed.js"></script>
     <noscript><p><a href="http://%(shortname)s.disqus.com/?url=ref">View the discussion thread.</a></p></noscript>
     <p><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></p>
-    """ % dict(shortname=settings.DISQUS_WEBSITE_SHORTNAME)
+    """ % dict(shortname=disqus_shortname)
 
 def disqus_recent_comments(num_items=3, avatar_size=32):
     """
