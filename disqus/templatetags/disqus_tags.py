@@ -38,7 +38,7 @@ def disqus_num_replies(shortname=''):
                 query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
             }
         }
-        document.write('<script type="text/javascript" src="http://disqus.com/forums/%s/get_num_replies.js' + query + '"></' + 'script>');
+        document.write('<script type="text/javascript" src="http://%s.disqus.com/get_num_replies.js' + query + '"></' + 'script>');
     })();
     //]]>
     </script>
@@ -61,7 +61,7 @@ def disqus_show_comments(title=None, url=None, snippet=None, shortname=''):
     else: s = ''
     return s + """
     <div id="disqus_thread"></div>
-    <script type="text/javascript" src="http://disqus.com/forums/%(shortname)s/embed.js"></script>
+    <script type="text/javascript" src="http://%(shortname)s.disqus.com/embed.js"></script>
     <noscript><p><a href="http://%(shortname)s.disqus.com/?url=ref">View the discussion thread.</a></p></noscript>
     <p><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></p>
     """ % dict(shortname=disqus_shortname)
@@ -71,7 +71,7 @@ def disqus_recent_comments(num_items=3, avatar_size=32):
     Returns the HTML/js code necessary to display the recent comments widget.
     """
     return """
-    <script type="text/javascript" src="http://disqus.com/forums/%(shortname)s/recent_comments_widget.js?num_items=%(num_items)d&amp;avatar_size=%(avatar_size)d"></script>
+    <script type="text/javascript" src="http://%(shortname)s.disqus.com/recent_comments_widget.js?num_items=%(num_items)d&amp;avatar_size=%(avatar_size)d"></script>
     <noscript><p><a href="http://%(shortname)s.disqus.com/?url=ref">View the discussion thread.</a></p></noscript>
     """ % dict(shortname=settings.DISQUS_WEBSITE_SHORTNAME,
                num_items=num_items, avatar_size=avatar_size)
